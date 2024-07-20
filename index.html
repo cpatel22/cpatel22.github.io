@@ -49,7 +49,7 @@
             counters[decodedText] = 1;
         }
         updateResults();
-         alert(new Date().toLocaleString().replace(',','')+decodedText+ counters[decodedText]);
+        
         recordResult(new Date().toLocaleString().replace(',',''),decodedText, counters[decodedText]);
         html5QrCode.stop().then(() => {
             readerDiv.style.display = 'none';
@@ -80,8 +80,8 @@
         const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
         const data = { "fields": {
         "Datetime": dates,
-        "Code": barcode,
-        "Count": count
+        "Code": barcode.toString(),
+        "Count": count.toString()
       }};
 
         try {
