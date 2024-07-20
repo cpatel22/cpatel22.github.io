@@ -28,8 +28,9 @@
     </style>
 </head>
 <body>
-   <button id="start-scan">Start Scan</button>
-    <div id="reader"></div>
+   <div id="reader"></div><br/><br/>
+   <button id="start-scan">Start Scan</button>  <br/><br/> 
+   <div><label id="msg"></label></div>
     <div id="results">
         <h3>Scanned Results:</h3>
         <ul id="result-list"></ul>
@@ -95,16 +96,16 @@
             });
 
             if (response.ok) {
-                const jsonResponse =  response.json();
-                alert('Record created successfully!');
+                const jsonResponse =  response.json(); 
+                document.getElementById('lbltipAddedComment').innerHTML ="Jay Swaminarayan";              
                 console.log(jsonResponse);
             } else {
-                const errorResponse =  response.json();
-                alert(`Error: ${errorResponse.error.message}`);
+                const errorResponse =  response.json(); 
+                document.getElementById('lbltipAddedComment').innerHTML = errorResponse.error.message;            
                 console.error(errorResponse);
             }
         } catch (error) {
-            alert('Network error. Please try again.');
+            document.getElementById('lbltipAddedComment').innerHTML =error;
             console.error('Network error:', error);
         }
     }   
