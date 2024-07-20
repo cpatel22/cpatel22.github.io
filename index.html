@@ -49,6 +49,7 @@
             counters[decodedText] = 1;
         }
         updateResults();
+         alert(new Date().toLocaleString().replace(',','')+decodedText+ counters[decodedText]);
         recordResult(new Date().toLocaleString().replace(',',''),decodedText, counters[decodedText]);
         html5QrCode.stop().then(() => {
             readerDiv.style.display = 'none';
