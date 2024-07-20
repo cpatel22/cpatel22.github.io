@@ -71,8 +71,7 @@
         }
     }
     async function recordResult(dates,barcode, count)
-    {
-        
+    {     
 
         const apiKey = 'patWn6uI2mCmUsc3C.5c520225b322112ed798fece693ce4d02f9df2e67d2e3221baff19911c2c9b4a';
         const baseId = 'appII93Mhn70rFXbO';
@@ -113,8 +112,7 @@
     startScanButton.addEventListener('click', () => {
         readerDiv.style.display = 'block';
         html5QrCode = new Html5Qrcode("reader");
-        const config = { fps: 10, qrbox: 250 };
-        recordResult("07/27/2024 15:45:62","demo","1");
+        const config = { fps: 10, qrbox: 250 };       
         html5QrCode.start(
             { facingMode: "environment" },
             config,
