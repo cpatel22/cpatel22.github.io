@@ -51,7 +51,7 @@
         }
         updateResults();
         
-        recordResult(new Date().toLocaleString().replace(',',''),decodedText,1);
+        recordResult(new Date().toLocaleString().replace(',',''),decodedText, 1);
         html5QrCode.stop().then(() => {
             readerDiv.style.display = 'none';
         }).catch(err => console.error('Failed to stop QR code scanning:', err));
@@ -96,15 +96,15 @@
 
             if (response.ok) {
                 const jsonResponse =  response.json(); 
-                document.getElementById('lbltipAddedComment').innerHTML ="Jay Swaminarayan";              
+                document.getElementById('msg').innerHTML ="Jay Swaminarayan";              
                 console.log(jsonResponse);
             } else {
                 const errorResponse =  response.json(); 
-                document.getElementById('lbltipAddedComment').innerHTML = errorResponse.error.message;            
+                document.getElementById('msg').innerHTML = errorResponse.error.message;            
                 console.error(errorResponse);
             }
         } catch (error) {
-            document.getElementById('lbltipAddedComment').innerHTML =error;
+            document.getElementById('msg').innerHTML =error;
             console.error('Network error:', error);
         }
     }   
