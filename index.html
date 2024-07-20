@@ -51,7 +51,7 @@
         }
         updateResults();
         
-        recordResult(new Date().toLocaleString().replace(',',''),decodedText, counters[decodedText]);
+        recordResult(new Date().toLocaleString().replace(',',''),decodedText,1);
         html5QrCode.stop().then(() => {
             readerDiv.style.display = 'none';
         }).catch(err => console.error('Failed to stop QR code scanning:', err));
