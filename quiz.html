@@ -15,6 +15,12 @@
         h1 {
             color: #2c3e50;
         }
+        correct{
+            color:green;
+        }
+        wrong{
+            color:red;
+        }
         #initial, #quiz, #summary {
             background: white;
             border-radius: 8px;
@@ -94,13 +100,14 @@
         <h2>Quiz Summary</h2>
         <p id="score"></p>
         <ul id="answerList"></ul>
+        <p id="per"></div>
         <button onclick="location.reload()">Retry</button>
     </div>
 
     <script>
         let currentQuestion;
         let score = 0;
-        let totalQuestions = 25;
+        let totalQuestions = 5;
         let questionsAnswered = 0;
         let timer;
         const timerLimit = 45;
@@ -186,7 +193,7 @@
         }
 
         function checkAnswer() {
-            const userAnswer = parseFloat(document.getElementById('answer').value);
+            const userAnswer =document.getElementById('answer').value>=0? parseFloat(document.getElementById('answer').value):null;
             answersSubmitted.push({ question: currentQuestion.question, answer: userAnswer, correct: currentQuestion.answer });
             if (userAnswer === currentQuestion.answer) {
                 score++;
@@ -200,12 +207,16 @@
             document.getElementById('quiz').style.display = 'none';
             document.getElementById('summary').style.display = 'block';
             document.getElementById('score').innerText = `You scored ${score} out of ${totalQuestions}`;
+            document.getElementById('per').innerText = `You got ${(score / totalQuestions) * 100}`;
             const answerList = document.getElementById('answerList');
+            answerList.style.cssText ="display: inline-block; text-align: left;";
             answerList.innerHTML = ''; // Clear previous answers
             answersSubmitted.forEach((item, index) => {
+                if(item.answer!=item.correct){
                 const li = document.createElement('li');
                 li.innerText = `Q${index + 1}: ${item.question} Your Answer: ${item.answer !== null ? item.answer : 'Time Up'}, Correct Answer: ${item.correct}`;
-                answerList.appendChild(li);
+                li.style.cssText = (item.answer==item.correct? "color:green;" :"color:red;")+"display: inline-block; text-align: left;";
+                answerList.appendChild(li);}
             });
         }
     </script>
