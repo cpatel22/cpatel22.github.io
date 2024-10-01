@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,16 +13,22 @@
             text-align: center;
             padding: 20px;
         }
+
         h1 {
             color: #2c3e50;
         }
-        correct{
-            color:green;
+
+        correct {
+            color: green;
         }
-        wrong{
-            color:red;
+
+        wrong {
+            color: red;
         }
-        #initial, #quiz, #summary {
+
+        #initial,
+        #quiz,
+        #summary {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -29,7 +36,10 @@
             margin: 20px auto;
             max-width: 400px;
         }
-        input, select, button {
+
+        input,
+        select,
+        button {
             padding: 10px;
             margin: 10px 0;
             width: 100%;
@@ -37,6 +47,15 @@
             border-radius: 5px;
             font-size: 1em;
         }
+
+        table.problem {
+            font-family: Sans-Serif;
+            font-size: 24px;
+            text-align: right;
+
+            margin: 40px;
+        }
+
         button {
             background-color: #3498db;
             color: white;
@@ -44,16 +63,20 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #2980b9;
         }
+
         #timer {
             font-size: 1.5em;
             color: red;
         }
+
         .question-container {
             margin-bottom: 20px;
         }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.8em;
@@ -61,13 +84,14 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Math Quiz</h1>
-    
+
     <div id="initial">
         <label for="name">Enter Your Name (required):</label>
         <input type="text" id="name" required>
-        
+
         <label for="operation">Select Operation (required):</label>
         <select id="operation" required>
             <option value="">-- Select an Operation --</option>
@@ -85,34 +109,73 @@
             <option value="500">0 to 500</option>
             <option value="999">0 to 999</option>
         </select>
-        
+
         <button onclick="startQuiz()">Start Quiz</button>
     </div>
 
     <div id="quiz" class="question-container" style="display: none;">
-        <h2 id="question"></h2>
+        <h2 id="question" style="display: none;"></h2>
         <div id="timer">45</div>
-        <input type="number" id="answer" placeholder="Type your answer" required>
-        <button onclick="checkAnswer()">Submit Answer</button>
+        <div style=" display: flex; justify-content: center;">
+            <table class="problem">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div id="num1"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="ops"></div>
+                        </td>
+                        <td>
+                            <div id="num2"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border: 2px solid;">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input id="answer" maxlength="4" pattern="\d{4}" required style="width: 60px;text-align: right;">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <button id="submitbtn" onclick="checkAnswer()">Submit Answer</button>
     </div>
 
     <div id="summary" style="display: none;">
         <h2>Quiz Summary</h2>
         <p id="score"></p>
         <ul id="answerList"></ul>
-        <p id="per"></div>
-        <button onclick="location.reload()">Retry</button>
+        <p id="per">
+    </div>
+    <button onclick="location.reload()">Retry</button>
     </div>
 
     <script>
         let currentQuestion;
         let score = 0;
-        let totalQuestions = 5;
+        let totalQuestions = 25;
         let questionsAnswered = 0;
         let timer;
         const timerLimit = 45;
         const answersSubmitted = [];
-
+        var input = document.getElementById("answer");
+        input.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("submitbtn").click();
+            }
+        });
         function startQuiz() {
             const name = document.getElementById('name').value;
             const operation = document.getElementById('operation').value;
@@ -156,44 +219,74 @@
                 currentQuestion = generateQuestion();
                 document.getElementById('question').innerText = currentQuestion.question;
                 document.getElementById('answer').value = '';
-                startTimer();
+                document.getElementById('num1').innerText = currentQuestion.bank.n1;
+                document.getElementById('num2').innerText = currentQuestion.bank.n2;
+                document.getElementById('ops').innerText = currentQuestion.bank.op;
+                document.getElementById('question').innerText =
+
+                    startTimer();
             } else {
                 showSummary();
             }
         }
 
         function generateQuestion() {
+
             const operation = document.getElementById('operation').value;
             const range = parseInt(document.getElementById('range').value);
             const num1 = Math.floor(Math.random() * range);
-            const num2 = Math.floor(Math.random() * range);
-            let questionText, correctAnswer;
+            const num2 = Math.floor(Math.random() * (num1 - 10) + 10);
+            let questionText, correctAnswer, questionBank;
 
             switch (operation) {
                 case 'addition':
                     questionText = `${num1} + ${num2} = ?`;
+                    questionBank = {
+                        n1: num1,
+                        n2: num2,
+                        op: "+",
+                        ans: num1 + num2
+                    };
                     correctAnswer = num1 + num2;
                     break;
                 case 'subtraction':
                     questionText = `${num1} - ${num2} = ?`;
+                    questionBank = {
+                        n1: num1,
+                        n2: num2,
+                        op: "-",
+                        ans: num1 + num2
+                    };
                     correctAnswer = num1 - num2;
                     break;
                 case 'multiplication':
                     questionText = `${num1} * ${num2} = ?`;
+                    questionBank = {
+                        n1: num1,
+                        n2: num2,
+                        op: "*",
+                        ans: num1 + num2
+                    };
                     correctAnswer = num1 * num2;
                     break;
                 case 'division':
                     if (num2 === 0) num2 = 1; // Avoid division by zero
                     questionText = `${num1 * num2} / ${num2} = ?`;
                     correctAnswer = num1; // (num1 * num2) / num2 = num1
+                    questionBank = {
+                        n1: num1,
+                        n2: num2,
+                        op: "/",
+                        ans: num1 + num2
+                    };
                     break;
             }
 
-            return { question: questionText, answer: correctAnswer };
+            return { question: questionText, answer: correctAnswer, bank: questionBank };
         }
 
         function checkAnswer() {
-            const userAnswer =document.getElementById('answer').value>=0? parseFloat(document.getElementById('answer').value):null;
+            const userAnswer = document.getElementById('answer').value >= 0 ? parseFloat(document.getElementById('answer').value) : null;
             answersSubmitted.push({ question: currentQuestion.question, answer: userAnswer, correct: currentQuestion.answer });
             if (userAnswer === currentQuestion.answer) {
                 score++;
@@ -209,16 +302,18 @@
             document.getElementById('score').innerText = `You scored ${score} out of ${totalQuestions}`;
             document.getElementById('per').innerText = `You got ${(score / totalQuestions) * 100}`;
             const answerList = document.getElementById('answerList');
-            answerList.style.cssText ="display: inline-block; text-align: left;";
+            answerList.style.cssText = "display: inline-block; text-align: left;";
             answerList.innerHTML = ''; // Clear previous answers
             answersSubmitted.forEach((item, index) => {
-                if(item.answer!=item.correct){
-                const li = document.createElement('li');
-                li.innerText = `Q${index + 1}: ${item.question} Your Answer: ${item.answer !== null ? item.answer : 'Time Up'}, Correct Answer: ${item.correct}`;
-                li.style.cssText = (item.answer==item.correct? "color:green;" :"color:red;")+"display: inline-block; text-align: left;";
-                answerList.appendChild(li);}
+                if (item.answer != item.correct) {
+                    const li = document.createElement('li');
+                    li.innerText = `Q${index + 1}: ${item.question} Your Answer: ${item.answer !== null ? item.answer : 'Time Up'}, Correct Answer: ${item.correct}`;
+                    li.style.cssText = (item.answer == item.correct ? "color:green;" : "color:red;") + "display: inline-block; text-align: left;";
+                    answerList.appendChild(li);
+                }
             });
         }
     </script>
 </body>
+
 </html>
