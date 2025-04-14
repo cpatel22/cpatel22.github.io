@@ -63,7 +63,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
         updateResults();
         
-        recordResult(new Date().toLocaleString().replace(',',''),decodedText, 1);
+        recordResult(new Date().toLocaleString().replace(',',''),decodedText);
         html5QrCode.stop().then(() => {
             readerDiv.style.display = 'none';
         }).catch(err => console.error('Failed to stop QR code scanning:', err));
@@ -82,18 +82,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             resultsList.appendChild(listItem);
         }
     }
-    async function recordResult(dates,barcode, count)
+    async function recordResult(dates,barcode)
     {     
 
         const apiKey = 'patMTZiEQfTGNj2uk.0d889cfbb25371d50be22b0c0a7b5e5ef331c2572a93abe280759ed2520ef1fd';
         const baseId = 'app7nww4mzlPdBvTT';
         const tableName = 'enlighteningspeeches2025';
-
+        
+        const parts = barcode.split("_");
         const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
         const data = { "fields": {
         "Datetime": dates,
-        "Code": barcode.toString(),
-        "Count": count.toString()
+        "Email":parts[1].toString(), 
+        "Phone":parts[2].toString(),
+        "Name":parts[3].toString(),     
+        "Adult_Male": parts[4].toString(),  
+        "Adult_Female": parts[5].toString(),  
+        "Kid_Male": parts[6].toString(),  
+        "Kid_Female": parts[7].toString(),  
+        "BarCode": parts[8].toString(),  
       }};
 
         try {
