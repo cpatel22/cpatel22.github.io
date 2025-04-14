@@ -93,14 +93,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
         const data = { "fields": {
         "Datetime": dates,
-        "Email":parts[1].toString(), 
-        "Phone":parts[2].toString(),
-        "Name":parts[3].toString(),     
-        "Adult_Male": parts[4].toString(),  
-        "Adult_Female": parts[5].toString(),  
-        "Kid_Male": parts[6].toString(),  
-        "Kid_Female": parts[7].toString(),  
-        "BarCode": parts[8].toString(),  
+        "Email":parts[0].toString(), 
+        "Phone":parts[1].toString(),
+        "Name":parts[2].toString(),     
+        "Adult_Male": parts[3].toString(),  
+        "Adult_Female": parts[4].toString(),  
+        "Kid_Male": parts[5].toString(),  
+        "Kid_Female": parts[6].toString(),  
+        "BarCode": barcode,  
       }};
 
         try {
