@@ -78,7 +78,7 @@ function playBeep() {
 
   oscillator.type = 'square';
   oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); // Frequency in Hz
-  gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // Volume
+  gainNode.gain.setValueAtTime(0.7, audioCtx.currentTime); // Volume
 
   oscillator.start();
   oscillator.stop(audioCtx.currentTime + 0.2); // Play for 0.2 seconds
