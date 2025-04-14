@@ -68,7 +68,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             readerDiv.style.display = 'none';
         }).catch(err => console.error('Failed to stop QR code scanning:', err));
     }
+function playBeep() {
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
 
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  oscillator.type = 'square';
+  oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); // Frequency in Hz
+  gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // Volume
+
+  oscillator.start();
+  oscillator.stop(audioCtx.currentTime + 0.2); // Play for 0.2 seconds
+}
     function onScanFailure(error) {
         // Handle scan failure, if necessary
         console.warn(`Scan error: ${error}`);
@@ -117,6 +131,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 const jsonResponse =  response.json(); 
                 document.getElementById('msg').innerHTML ="Jay Swaminarayan";              
                 console.log(jsonResponse);
+                playBeep(); // make the beep!
             } else {
                 const errorResponse =  response.json(); 
                 document.getElementById('msg').innerHTML = errorResponse.error.message;            
