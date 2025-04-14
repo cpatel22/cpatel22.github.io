@@ -92,7 +92,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const parts = barcode.split("_");
         const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
         const data = { "fields": {
-        "Datetime": dates,
+        "DateTime": dates,
         "Email":parts[0].toString(), 
         "Phone":parts[1].toString(),
         "Name":parts[2].toString(),     
